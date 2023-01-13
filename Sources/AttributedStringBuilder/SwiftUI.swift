@@ -1,10 +1,12 @@
-#if canImport(Cocoa)
+#if os(macOS)
 import Cocoa
-#elseif canImport(UIKit)
+#elseif os(iOS)
 import UIKit
 typealias NSImage = UIImage
 #endif
 import SwiftUI
+
+extension NSAttributedString: @unchecked Sendable {}
 
 public struct Embed<V: View>: AttributedStringConvertible {
     public init(proposal: ProposedViewSize = .unspecified, @ViewBuilder view: () -> V) {
@@ -19,7 +21,7 @@ public struct Embed<V: View>: AttributedStringConvertible {
     public func attributedString(environment: Environment) async -> [NSAttributedString] {
         let renderer = ImageRenderer(content: view)
         renderer.proposedSize = proposal
-#if canImport(Cocoa)
+#if os(macOS)
         let resultSize = renderer.nsImage?.size ?? .zero
 #else
         let resultSize = renderer.uiImage?.size ?? .zero

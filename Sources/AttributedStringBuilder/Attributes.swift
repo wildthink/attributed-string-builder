@@ -4,15 +4,10 @@
 //
 //  Created by Juul Spee on 08/07/2022.
 
-#if canImport(Cocoa)
+#if os(macOS)
 import Cocoa
-#elseif canImport(UIKit)
+#elseif os(iOS)
 import UIKit
-typealias NSFontDescriptor = UIFontDescriptor
-extension NSFontDescriptor.SymbolicTraits {
-    static var bold: NSFontDescriptor.SymbolicTraits = .traitBold
-    static var italic: NSFontDescriptor.SymbolicTraits = .traitItalic
-}
 #endif
 
 /// Attributes for `NSAttributedString`, wrapped in a struct for convenience.
@@ -69,11 +64,11 @@ extension Attributes {
         var traits = NSFontDescriptor.SymbolicTraits()
         if bold { traits.formUnion(.bold) }
         if italic { traits.formUnion(.italic )}
-#if canImport(Cocoa)
+#if os(macOS)
         if !traits.isEmpty { fontDescriptor = fontDescriptor.withSymbolicTraits(traits) }
         let font = XFont(descriptor: fontDescriptor, size: size)
         return font!
-#elseif canImport(UIKit)
+#elseif os(iOS)
         if !traits.isEmpty { fontDescriptor = fontDescriptor.withSymbolicTraits(traits)! }
         let font = XFont(descriptor: fontDescriptor, size: size)
         return font

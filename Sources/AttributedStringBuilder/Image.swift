@@ -1,4 +1,4 @@
-#if canImport(Cocoa)
+#if os(macOS)
 import Cocoa
 
 extension NSImage: AttributedStringConvertible {
@@ -10,7 +10,7 @@ extension NSImage: AttributedStringConvertible {
         ]
     }
 }
-#elseif canImport(UIKit)
+#elseif os(iOS)
 import UIKit
 
 extension UIImage: AttributedStringConvertible {

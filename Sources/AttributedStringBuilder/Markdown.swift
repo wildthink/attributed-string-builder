@@ -1,8 +1,8 @@
 import Markdown
 import Foundation
-#if canImport(Cocoa)
+#if os(macOS)
 import Cocoa
-#elseif canImport(UIKit)
+#elseif os(iOS)
 import UIKit
 #endif
 

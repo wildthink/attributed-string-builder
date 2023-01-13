@@ -1,5 +1,5 @@
 import Foundation
-#if canImport(Cocoa)
+#if os(macOS)
 import Cocoa
 #else
 import SwiftUI
@@ -27,7 +27,7 @@ extension NSAttributedString {
         let contentRect = pageRect.insetBy(dx: inset.width, dy: inset.height)
         let context = CGContext(consumer: consumer, mediaBox: &pageRect, nil)!
 
-#if canImport(Cocoa)
+#if os(macOS)
         NSGraphicsContext.saveGraphicsState()
         defer { NSGraphicsContext.restoreGraphicsState() }
         NSGraphicsContext.current = NSGraphicsContext(cgContext: context, flipped: true)
