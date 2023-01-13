@@ -1,4 +1,9 @@
+#if canImport(Cocoa)
 import Cocoa
+#elseif canImport(UIKit)
+import UIKit
+typealias NSImage = UIImage
+#endif
 import SwiftUI
 
 public struct Embed<V: View>: AttributedStringConvertible {
@@ -14,7 +19,11 @@ public struct Embed<V: View>: AttributedStringConvertible {
     public func attributedString(environment: Environment) async -> [NSAttributedString] {
         let renderer = ImageRenderer(content: view)
         renderer.proposedSize = proposal
-        let resultSize = renderer.nsImage!.size
+#if canImport(Cocoa)
+        let resultSize = renderer.nsImage?.size ?? .zero
+#else
+        let resultSize = renderer.uiImage?.size ?? .zero
+#endif
         let data = NSMutableData()
         renderer.render { size, renderer in
             var mediaBox = CGRect(origin: .zero, size: resultSize)

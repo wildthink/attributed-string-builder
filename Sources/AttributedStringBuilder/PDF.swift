@@ -1,5 +1,9 @@
 import Foundation
+#if canImport(Cocoa)
 import Cocoa
+#else
+import SwiftUI
+#endif
 
 extension CGFloat {
     public static var pointsPerInch: CGFloat { 72 }
@@ -23,10 +27,11 @@ extension NSAttributedString {
         let contentRect = pageRect.insetBy(dx: inset.width, dy: inset.height)
         let context = CGContext(consumer: consumer, mediaBox: &pageRect, nil)!
 
+#if canImport(Cocoa)
         NSGraphicsContext.saveGraphicsState()
         defer { NSGraphicsContext.restoreGraphicsState() }
         NSGraphicsContext.current = NSGraphicsContext(cgContext: context, flipped: true)
-
+#endif
         var needsMoreContainers = true
         while needsMoreContainers {
             let container = NSTextContainer(size: contentRect.size)

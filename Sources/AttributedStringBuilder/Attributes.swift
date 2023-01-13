@@ -4,11 +4,20 @@
 //
 //  Created by Juul Spee on 08/07/2022.
 
-import AppKit
+#if canImport(Cocoa)
+import Cocoa
+#elseif canImport(UIKit)
+import UIKit
+typealias NSFontDescriptor = UIFontDescriptor
+extension NSFontDescriptor.SymbolicTraits {
+    static var bold: NSFontDescriptor.SymbolicTraits = .traitBold
+    static var italic: NSFontDescriptor.SymbolicTraits = .traitItalic
+}
+#endif
 
 /// Attributes for `NSAttributedString`, wrapped in a struct for convenience.
 public struct Attributes {
-    public init(family: String = "Helvetica", size: CGFloat = 14, bold: Bool = false, italic: Bool = false, textColor: NSColor = .textColor, backgroundColor: NSColor? = nil, kern: CGFloat = 0, firstlineHeadIndent: CGFloat = 0, headIndent: CGFloat = 0, tabStops: [NSTextTab] = (1..<10).map { NSTextTab(textAlignment: .left, location: CGFloat($0) * 2 * 16) }, alignment: NSTextAlignment = .left, lineHeightMultiple: CGFloat = 1.3, minimumLineHeight: CGFloat? = nil, maximumLineHeight: CGFloat? = nil, paragraphSpacing: CGFloat = 0, paragraphSpacingBefore: CGFloat = 0, link: URL? = nil) {
+    public init(family: String = "Helvetica", size: CGFloat = 14, bold: Bool = false, italic: Bool = false, textColor: XColor = .textColor, backgroundColor: XColor? = nil, kern: CGFloat = 0, firstlineHeadIndent: CGFloat = 0, headIndent: CGFloat = 0, tabStops: [NSTextTab] = (1..<10).map { NSTextTab(textAlignment: .left, location: CGFloat($0) * 2 * 16) }, alignment: NSTextAlignment = .left, lineHeightMultiple: CGFloat = 1.3, minimumLineHeight: CGFloat? = nil, maximumLineHeight: CGFloat? = nil, paragraphSpacing: CGFloat = 0, paragraphSpacingBefore: CGFloat = 0, link: URL? = nil) {
         self.family = family
         self.size = size
         self.bold = bold
@@ -32,8 +41,8 @@ public struct Attributes {
     public var size: CGFloat
     public var bold: Bool = false
     public var italic: Bool = false
-    public var textColor: NSColor = .textColor
-    public var backgroundColor: NSColor? = nil
+    public var textColor: XColor = .textColor
+    public var backgroundColor: XColor? = nil
     public var kern: CGFloat = 0
     public var firstlineHeadIndent: CGFloat = 0
     public var headIndent: CGFloat = 0
@@ -54,15 +63,24 @@ extension Attributes {
         headIndent = value
     }
 
-    fileprivate var font: NSFont {
+    fileprivate var font: XFont {
         var fontDescriptor = NSFontDescriptor(name: family, size: size)
 
         var traits = NSFontDescriptor.SymbolicTraits()
         if bold { traits.formUnion(.bold) }
         if italic { traits.formUnion(.italic )}
+#if canImport(Cocoa)
         if !traits.isEmpty { fontDescriptor = fontDescriptor.withSymbolicTraits(traits) }
-        let font = NSFont(descriptor: fontDescriptor, size: size)!
+        let font = XFont(descriptor: fontDescriptor, size: size)
+        return font!
+#elseif canImport(UIKit)
+        if !traits.isEmpty { fontDescriptor = fontDescriptor.withSymbolicTraits(traits)! }
+        let font = XFont(descriptor: fontDescriptor, size: size)
         return font
+        #endif
+        
+//        let font = XFont(descriptor: fontDescriptor, size: size)
+//        return font
     }
 
     fileprivate var paragraphStyle: NSParagraphStyle {

@@ -1,5 +1,10 @@
 import Markdown
-import AppKit
+import Foundation
+#if canImport(Cocoa)
+import Cocoa
+#elseif canImport(UIKit)
+import UIKit
+#endif
 
 public struct DefaultStylesheet: Stylesheet {
 }
@@ -174,7 +179,7 @@ struct AttributedStringWalker: MarkupWalker {
 
     func visitThematicBreak(_ thematicBreak: ThematicBreak) -> () {
         // TODO we could consider making this stylable, but ideally the stylesheet doesn't know about NSAttributedString?
-        let thematicBreak = NSAttributedString(string: "\n\r\u{00A0} \u{0009} \u{00A0}\n\n", attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: NSColor.gray])
+        let thematicBreak = NSAttributedString(string: "\n\r\u{00A0} \u{0009} \u{00A0}\n\n", attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: XColor.gray])
         attributedString.append(thematicBreak)
 
     }

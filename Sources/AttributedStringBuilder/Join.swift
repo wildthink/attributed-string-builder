@@ -1,4 +1,4 @@
-import Cocoa
+import Foundation
 
 struct Joined<Content: AttributedStringConvertible>: AttributedStringConvertible {
     var separator: AttributedStringConvertible = "\n"

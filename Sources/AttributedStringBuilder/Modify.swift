@@ -1,4 +1,4 @@
-import AppKit
+import Foundation
 
 struct Modify: AttributedStringConvertible {
     var modify: (inout Attributes) -> ()
@@ -19,7 +19,7 @@ extension AttributedStringConvertible {
         modify { $0.bold = true }
     }
 
-    public func textColor(_ color: NSColor) -> some AttributedStringConvertible {
+    public func textColor(_ color: XColor) -> some AttributedStringConvertible {
         modify { $0.textColor = color }
     }
 }
