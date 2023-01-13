@@ -69,10 +69,12 @@ extension Attributes {
         let font = XFont(descriptor: fontDescriptor, size: size)
         return font!
 #elseif os(iOS)
-        if !traits.isEmpty { fontDescriptor = fontDescriptor.withSymbolicTraits(traits)! }
+        if !traits.isEmpty, let fd = fontDescriptor.withSymbolicTraits(traits) {
+            fontDescriptor = fd
+        }
         let font = XFont(descriptor: fontDescriptor, size: size)
         return font
-        #endif
+#endif
         
 //        let font = XFont(descriptor: fontDescriptor, size: size)
 //        return font
