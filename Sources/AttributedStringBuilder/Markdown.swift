@@ -1,6 +1,8 @@
 import Markdown
 import Foundation
-
+#if os(macOS)
+import AppKit
+#endif
 public struct DefaultStylesheet: Stylesheet { }
 
 extension Stylesheet where Self == DefaultStylesheet {
