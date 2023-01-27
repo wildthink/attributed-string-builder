@@ -1,4 +1,4 @@
-import Cocoa
+import SwiftUI
 
 extension NSImage: AttributedStringConvertible {
     public func attributedString(environment: EnvironmentValues) -> [NSAttributedString] {

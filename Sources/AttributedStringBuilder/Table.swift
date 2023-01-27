@@ -6,6 +6,7 @@
 //
 
 import Foundation
+#if os(macOS)
 import Cocoa
 
 // TODO would be nice to have a builder here as well
@@ -158,3 +159,4 @@ public struct WidthValue: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral
     }
 
 }
+#endif // os(macOS)

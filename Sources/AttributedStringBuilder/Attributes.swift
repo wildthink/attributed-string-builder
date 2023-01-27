@@ -4,7 +4,8 @@
 //
 //  Created by Juul Spee on 08/07/2022.
 
-import AppKit
+import Foundation
+import SwiftUI
 
 /// Attributes for `NSAttributedString`, wrapped in a struct for convenience.
 public struct Attributes {

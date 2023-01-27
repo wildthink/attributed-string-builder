@@ -1,4 +1,4 @@
-import AppKit
+import Foundation
 
 struct Modify: AttributedStringConvertible {
     var modify: (inout Attributes) -> ()

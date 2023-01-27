@@ -1,4 +1,4 @@
-import Cocoa
+//import Cocoa
 import SwiftUI
 
 public struct Embed<V: View>: AttributedStringConvertible {

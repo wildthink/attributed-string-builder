@@ -1,5 +1,5 @@
 import Markdown
-import AppKit
+import Foundation
 
 public struct DefaultStylesheet: Stylesheet { }
 
@@ -121,10 +121,11 @@ struct AttributedStringWalker: MarkupWalker {
         defer { attributes = original }
 
         let isOrdered = list is OrderedList
-
+#if os(macOS)
         attributes.tabStops[0] = NSTextTab(textAlignment: .right, location: attributes.tabStops[0].location)
         attributes.tabStops[1] = NSTextTab(textAlignment: .left, location: attributes.tabStops[0].location + 10)
         attributes.headIndent += attributes.tabStops[1].location
+#endif
         attributes.paragraphSpacing = 0 // Remove spacing between list items
 
         for (item, number) in zip(list.listItems, 1...) {

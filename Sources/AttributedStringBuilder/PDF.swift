@@ -1,5 +1,5 @@
 import Foundation
-import Cocoa
+import SwiftUI
 
 extension CGFloat {
     public static var pointsPerInch: CGFloat { 72 }
