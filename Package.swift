@@ -1,10 +1,10 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 6.0
 
 import PackageDescription
 
 let package = Package(
     name: "attributed-string-builder",
-    platforms: [.macOS(.v13), .iOS(.v16)],
+    platforms: [.macOS(.v15), .iOS(.v17)],
     products: [
         .library(
             name: "AttributedStringBuilder",

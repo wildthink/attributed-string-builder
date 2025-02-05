@@ -14,6 +14,8 @@ var example: some AttributedStringConvertible {
     - One
     - Two
     - Three
+      - Four
+      - Five
 
     ```
     some code
@@ -24,11 +26,27 @@ var example: some AttributedStringConvertible {
     1. One
     1. Two
     1. Three
+    
+    Checklist:
+    
+    - [ ] Unchecked item
+    - [x] Checked item
 
     Another *paragraph*.
 
     > A blockquote.
     """.markdown() as any AttributedStringConvertible, count: 2)
+    Table(rows: [
+        .init(cells: [
+            .init(borderColor: .green, borderWidth: .init(right: 2), contents: "Table Testing"),
+            .init(contents: Embed {
+                        Circle().fill(LinearGradient(colors: [.blue, .red], startPoint: .top, endPoint: .bottom))
+                    .frame(width: 100, height: 100)
+                } )
+        ])
+    ])
+    .modify { $0.size = 10 }
+    
 //    NSImage(systemSymbolName: "hand.wave", accessibilityDescription: nil)!
     Embed {
         HStack {
@@ -40,7 +58,7 @@ var example: some AttributedStringConvertible {
     }
 }
 
-let sampleAttributes = Attributes(family: "Tiempos Text", size: 16, textColor: .black, paragraphSpacing: 10)
+let sampleAttributes = Attributes(family: "Georgia", size: 16, textColor: .black, paragraphSpacing: 10)
 
 
 class Tests: XCTestCase {

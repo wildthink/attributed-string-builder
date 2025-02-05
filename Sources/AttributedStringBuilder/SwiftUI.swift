@@ -1,3 +1,4 @@
+#if EMBED_VIEW
 #if os(macOS)
 import Cocoa
 #elseif os(iOS)
@@ -18,7 +19,7 @@ public struct Embed<V: View>: AttributedStringConvertible {
     @ViewBuilder var view: V
 
     @MainActor
-    public func attributedString(environment: Environment) async -> [NSAttributedString] {
+    public func attributedString(environment: EnvironmentValues) async -> [NSAttributedString] {
         let renderer = ImageRenderer(content: view)
         renderer.proposedSize = proposal
 #if os(macOS)
@@ -44,5 +45,4 @@ public struct Embed<V: View>: AttributedStringConvertible {
         return NSImage(data: data as Data)!.attributedString(environment: environment)
     }
 }
-
-
+#endif

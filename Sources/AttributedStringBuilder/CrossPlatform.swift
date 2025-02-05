@@ -22,7 +22,7 @@ public extension XColor {
 
 typealias NSFontDescriptor = UIFontDescriptor
 extension NSFontDescriptor.SymbolicTraits {
-    static var bold: NSFontDescriptor.SymbolicTraits = .traitBold
-    static var italic: NSFontDescriptor.SymbolicTraits = .traitItalic
+    static let bold: NSFontDescriptor.SymbolicTraits = .traitBold
+    static let italic: NSFontDescriptor.SymbolicTraits = .traitItalic
 }
 #endif

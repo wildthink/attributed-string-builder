@@ -13,6 +13,9 @@ import UIKit
 /// Attributes for `NSAttributedString`, wrapped in a struct for convenience.
 public struct Attributes {
     public init(family: String = "Helvetica", size: CGFloat = 14, bold: Bool = false, italic: Bool = false, textColor: XColor = .textColor, backgroundColor: XColor? = nil, kern: CGFloat = 0, firstlineHeadIndent: CGFloat = 0, headIndent: CGFloat = 0, tabStops: [NSTextTab] = (1..<10).map { NSTextTab(textAlignment: .left, location: CGFloat($0) * 2 * 16) }, alignment: NSTextAlignment = .left, lineHeightMultiple: CGFloat = 1.3, minimumLineHeight: CGFloat? = nil, maximumLineHeight: CGFloat? = nil, paragraphSpacing: CGFloat = 0, paragraphSpacingBefore: CGFloat = 0, link: URL? = nil) {
+//=======
+//    public init(family: String = "Helvetica", size: CGFloat = 14, bold: Bool = false, italic: Bool = false, textColor: NSColor = .textColor, backgroundColor: NSColor? = nil, kern: CGFloat = 0, firstlineHeadIndent: CGFloat = 0, headIndent: CGFloat = 0, tabStops: [NSTextTab] = (1..<10).map { NSTextTab(textAlignment: .left, location: CGFloat($0) * 2 * 16) }, alignment: NSTextAlignment = .left, lineHeightMultiple: CGFloat = 1.3, minimumLineHeight: CGFloat? = nil, maximumLineHeight: CGFloat? = nil, paragraphSpacing: CGFloat = 14, paragraphSpacingBefore: CGFloat = 0, link: URL? = nil, cursor: NSCursor? = nil) {
+//>>>>>>> 26a6b79dc9f192ce8dc46419120f8bd6a3f21bc7
         self.family = family
         self.size = size
         self.bold = bold
@@ -30,6 +33,7 @@ public struct Attributes {
         self.paragraphSpacing = paragraphSpacing
         self.paragraphSpacingBefore = paragraphSpacingBefore
         self.link = link
+//        self.cursor = cursor jmj macOS
     }
 
     public var family: String
@@ -49,6 +53,7 @@ public struct Attributes {
     public var paragraphSpacing: CGFloat = 0
     public var paragraphSpacingBefore: CGFloat = 0
     public var link: URL? = nil
+//    public var cursor: NSCursor? = nil jmj macOS
     public var customAttributes: [String: Any] = [:]
 }
 
@@ -108,6 +113,11 @@ extension Attributes {
         if let url = link {
             result[.link] = url
         }
+        #if os(macOS)
+        if let cursor {
+            result[.cursor] = cursor
+        }
+        #endif
         for (key, value) in customAttributes {
             result[NSAttributedString.Key(key)] = value
         }

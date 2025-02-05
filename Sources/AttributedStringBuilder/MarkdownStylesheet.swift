@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// A type that defines styles for various markdown elements by setting properties on a given `Attributes` value.
 public protocol Stylesheet {
@@ -16,11 +17,15 @@ public protocol Stylesheet {
     func blockQuote(attributes: inout Attributes)
     func link(attributes: inout Attributes)
     func heading(level: Int, attributes: inout Attributes)
-    func listItem(attributes: inout Attributes)
+    func listItem(attributes: inout Attributes, checkbox: Bool?)
     func orderedListItemPrefix(number: Int) -> String
     func orderedListItemPrefix(attributes: inout Attributes)
     var unorderedListItemPrefix: String { get }
     func unorderedListItemPrefix(attributes: inout Attributes)
+    var checkboxCheckedPrefix: String { get }
+    func checkboxCheckedPrefix(attributes: inout Attributes)
+    var checkboxUncheckedPrefix: String { get }
+    func checkboxUncheckedPrefix(attributes: inout Attributes)
     func footnote(attributes: inout Attributes)
 }
 
@@ -43,7 +48,11 @@ extension Stylesheet {
         attributes.headIndent = 20
     }
 
-    public func listItem(attributes: inout Attributes) { }
+    public func listItem(attributes: inout Attributes, checkbox: Bool?) {
+        if checkbox == true {
+            attributes.textColor = .secondaryLabel
+        }
+    }
 
     public func orderedListItemPrefix(number: Int) -> String {
         "\(number)."
@@ -56,6 +65,26 @@ extension Stylesheet {
     }
 
     public func unorderedListItemPrefix(attributes: inout Attributes) { }
+    
+    public var checkboxCheckedPrefix: String {
+        "[x]" // TODO: fix NSTextView image clicks for "􀃳"
+    }
+    
+    public func checkboxCheckedPrefix(attributes: inout Attributes) {
+        attributes.textColor = .tintColor
+//        attributes.cursor = .arrow jmj
+        attributes.family = "Monaco" // monospaced
+    }
+    
+    public var checkboxUncheckedPrefix: String {
+        "[ ]" // TODO: fix NSTextView image clicks for "􀂒"
+    }
+    
+    public func checkboxUncheckedPrefix(attributes: inout Attributes) {
+        attributes.textColor = .secondaryLabel
+//        attributes.cursor = .arrow jmj
+        attributes.family = "Monaco" // monospaced
+    }
 
     public func footnote(attributes: inout Attributes) {
         attributes.size *= 0.8
